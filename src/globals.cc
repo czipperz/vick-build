@@ -10,7 +10,7 @@ bool IS_TEST;
 bool IS_CLEAN;
 bool IS_VERBOSE;
 
-std::string CXX = "g++";
+std::string CXX = "clang++";
 std::string CXXFLAGS =
     "-std=c++11 -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor "
     "-Wnarrowing -Wdelete-non-virtual-dtor -Wctor-dtor-privacy "
