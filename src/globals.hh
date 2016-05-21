@@ -52,6 +52,14 @@ extern std::string CXXFLAGS;
 extern std::string LDFLAGS;
 
 /**
+ * Immutable flags, denoting directories to include, given to the
+ * compiler.
+ *
+ * @see CXX
+ */
+extern const std::string INCLUDES;
+
+/**
  * This is the directory where source files are located.
  */
 extern const std::string SRC_DIR;

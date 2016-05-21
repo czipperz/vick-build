@@ -16,6 +16,7 @@ std::string CXXFLAGS =
     "-Wnarrowing -Wdelete-non-virtual-dtor -Wctor-dtor-privacy "
     "-Woverloaded-virtual -Wsign-promo";
 std::string LDFLAGS = "-lboost_regex -lncurses -lpthread";
+const std::string INCLUDES = "-Iplugins -Isrc -Icatch-raw";
 
 const std::string SRC_DIR = "src";
 const std::string SRCOUT_DIR = "out";

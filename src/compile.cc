@@ -14,7 +14,8 @@ using namespace boost::filesystem;
 static void
 generate_dependencies(const path& src, const path& dependencies) {
     std::string command = CXX + " -std=c++11 -MM -MF " +
-                          dependencies.string() + ' ' + src.string();
+                          dependencies.string() + ' ' + src.string() +
+                          ' ' + INCLUDES;
     if (IS_VERBOSE) {
         std::lock_guard<std::mutex> lock(print_mutex);
         puts(command.c_str());
@@ -123,7 +124,8 @@ bool compile(path src, path out, path dependencies) {
         create_directory(out.parent_path());
 
         std::string combined = CXX + " -o " + out.string() + " -c " +
-                               src.string() + ' ' + CXXFLAGS;
+                               src.string() + ' ' + CXXFLAGS + ' ' +
+                               INCLUDES;
 
         if (!force_finish) {
             if (IS_VERBOSE) {
