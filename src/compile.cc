@@ -80,11 +80,7 @@ consume_file(const path& src, const path& out, const path& dep,
             eit = std::find_if(eit, end, [](char ch) {
                 return std::isspace(ch);
             });
-            // if space in file path, uses `\ ` format
-            // if (eit == end || eit[-1] != '\\') {
-            //     break;
-            // }
-        } while (eit != end && eit[-1] != '\\');
+        } while (eit != end && eit[-1] == '\\');
         path file{it, eit};
         auto write_time_file = last_write_time(file);
         if (difftime(write_time_file, write_time_out) > 0) {
