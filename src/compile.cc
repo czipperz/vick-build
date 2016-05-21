@@ -8,24 +8,24 @@
 #include "compile.hh"
 #include "globals.hh"
 
-std::atomic<bool> force_finish(false);
-
 using namespace boost::filesystem;
 static void
 generate_dependencies(const path& src, const path& dependencies) {
     std::string command = CXX + " -std=c++11 -MM -MF " +
                           dependencies.string() + ' ' + src.string() +
                           ' ' + INCLUDES;
-    if (IS_VERBOSE) {
-        std::lock_guard<std::mutex> lock(print_mutex);
-        puts(command.c_str());
-    } else {
-        std::string message = "Dependencies for " + src.string();
-        std::lock_guard<std::mutex> lock(print_mutex);
-        puts(message.c_str());
-    }
-    if (system(command.c_str())) {
-        force_finish = true;
+    if (!HAS_ERROR || IS_KEEP_GOING) {
+        if (IS_VERBOSE) {
+            std::lock_guard<std::mutex> lock(print_mutex);
+            puts(command.c_str());
+        } else {
+            std::string message = "Dependencies for " + src.string();
+            std::lock_guard<std::mutex> lock(print_mutex);
+            puts(message.c_str());
+        }
+        if (system(command.c_str())) {
+            HAS_ERROR = true;
+        }
     }
 }
 
@@ -120,14 +120,15 @@ static bool should_compile(const path& src, const path& out,
 }
 
 bool compile(path src, path out, path dependencies) {
-    if (!force_finish && should_compile(src, out, dependencies)) {
+    if ((!HAS_ERROR || IS_KEEP_GOING) &&
+        should_compile(src, out, dependencies)) {
         create_directory(out.parent_path());
 
         std::string combined = CXX + " -o " + out.string() + " -c " +
                                src.string() + ' ' + CXXFLAGS + ' ' +
                                INCLUDES;
 
-        if (!force_finish) {
+        if ((!HAS_ERROR || IS_KEEP_GOING)) {
             if (IS_VERBOSE) {
                 std::lock_guard<std::mutex> lock(print_mutex);
                 std::puts(combined.c_str());
@@ -137,7 +138,7 @@ bool compile(path src, path out, path dependencies) {
                 std::puts(message.c_str());
             }
             if (system(combined.c_str())) {
-                force_finish = true;
+                HAS_ERROR = true;
             }
         }
     }

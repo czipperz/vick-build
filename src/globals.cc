@@ -9,6 +9,9 @@ bool IS_ALL;
 bool IS_TEST;
 bool IS_CLEAN;
 bool IS_VERBOSE;
+bool IS_KEEP_GOING;
+
+std::atomic<bool> HAS_ERROR;
 
 std::string CXX = "clang++";
 std::string CXXFLAGS =

@@ -1,6 +1,7 @@
 #ifndef HEADER_GUARD_GLOBALS_H
 #define HEADER_GUARD_GLOBALS_H
 
+#include <atomic>
 #include <string>
 
 /**
@@ -31,6 +32,19 @@ extern bool IS_CLEAN;
  * command, otherwise it shall output a short summary.
  */
 extern bool IS_VERBOSE;
+
+/**
+ * If true, then continue compiling all files even if one fails.  Will
+ * not link if there is an error.
+ */
+extern bool IS_KEEP_GOING;
+
+/**
+ * True if a compilation has returned an error code != 0.
+ * Causes compilation to cease (unless IS_KEEP_GOING is true), and
+ * prevents linking.
+ */
+extern std::atomic<bool> HAS_ERROR;
 
 /**
  * This is the compiler to be used.  Defaults to "g++".
