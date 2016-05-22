@@ -114,7 +114,8 @@ void compile(path src, path out, path dependencies) {
                 std::lock_guard<std::mutex> lock(print_mutex);
                 std::puts(message.c_str());
             }
-            if (system(combined.c_str())) {
+            if ((!HAS_ERROR || IS_KEEP_GOING) &&
+                system(combined.c_str())) {
                 HAS_ERROR = true;
             }
         }
