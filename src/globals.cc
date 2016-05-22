@@ -10,6 +10,7 @@ bool IS_TEST;
 bool IS_CLEAN;
 bool IS_VERBOSE;
 bool IS_KEEP_GOING;
+bool IS_EXPLAIN;
 
 std::atomic<bool> HAS_ERROR;
 

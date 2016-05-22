@@ -11,6 +11,7 @@ void usage(const char* progname) {
             " -k --keep-going Keep compiling files even if one fails.  Will not\n"
             "                 link if there is an error, just like the normal\n"
             "                 behavior.\n"
+            " -e --explain    Explain why files are compiled.\n"
             "Configuration:\n"
             "    NUM_THREADS  Specify the number of threads that will be used for\n"
             "                 various tasks.  Defaults to 0.\n"

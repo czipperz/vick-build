@@ -64,7 +64,7 @@ consume_file(const path& src, const path& out, const path& dep,
         path file{it, eit};
         auto write_time_file = last_write_time(file);
         if (difftime(write_time_file, write_time_out) > 0) {
-            {
+            if (IS_EXPLAIN) {
                 std::string message = "Compile " + src.string() +
                                       " because of " + file.string();
                 std::lock_guard<std::mutex> lock(print_mutex);

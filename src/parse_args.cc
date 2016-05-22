@@ -31,7 +31,7 @@ static int myatoi(const char* str, const char* s) {
 
 void parse_args(int argc, char** argv) {
     bool all = false, test = false, clean = false, verbose = false,
-        num_threads = false, keep_going = false;
+        num_threads = false, keep_going = false, explain = false;
     bool implicit_all = true;
     bool exit_at_fin = false;
 
@@ -92,6 +92,11 @@ void parse_args(int argc, char** argv) {
         } else if (strcmp(str, "-v") == 0 ||
                    strcmp(str, "--verbose") == 0) {
             verbose = true;
+
+
+        } else if (strcmp(str, "-e") == 0 ||
+                   strcmp(str, "--explain") == 0) {
+            explain = true;
 
 
         } else if (strcmp(str, "-k") == 0 ||
@@ -162,4 +167,5 @@ void parse_args(int argc, char** argv) {
     IS_CLEAN = clean;
     IS_VERBOSE = verbose;
     IS_KEEP_GOING = keep_going;
+    IS_EXPLAIN = explain;
 }

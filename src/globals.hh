@@ -40,6 +40,11 @@ extern bool IS_VERBOSE;
 extern bool IS_KEEP_GOING;
 
 /**
+ * If true, say why we are doing something.
+ */
+extern bool IS_EXPLAIN;
+
+/**
  * True if a compilation has returned an error code != 0.
  * Causes compilation to cease (unless IS_KEEP_GOING is true), and
  * prevents linking.
