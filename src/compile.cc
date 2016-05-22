@@ -9,25 +9,6 @@
 #include "globals.hh"
 
 using namespace boost::filesystem;
-static void
-generate_dependencies(const path& src, const path& dependencies) {
-    std::string command = CXX + " -std=c++11 -MM -MF " +
-                          dependencies.string() + ' ' + src.string() +
-                          ' ' + INCLUDES;
-    if (!HAS_ERROR || IS_KEEP_GOING) {
-        if (IS_VERBOSE) {
-            std::lock_guard<std::mutex> lock(print_mutex);
-            puts(command.c_str());
-        } else {
-            std::string message = "Dependencies for " + src.string();
-            std::lock_guard<std::mutex> lock(print_mutex);
-            puts(message.c_str());
-        }
-        if (system(command.c_str())) {
-            HAS_ERROR = true;
-        }
-    }
-}
 
 static bool
 consume_file(const path& src, const path& out, const path& dep,
@@ -39,7 +20,6 @@ consume_file(const path& src, const path& out, const path& dep,
             fprintf(stderr, "Dependencies file `%s` is invalid.\n",
                     dep.c_str());
         }
-        generate_dependencies(src, dep);
         return true;
     }
 
@@ -110,7 +90,6 @@ static bool should_compile(const path& src, const path& out,
         }
         return consume_file(src, out, dependencies, std::move(lines));
     } else {
-        generate_dependencies(src, dependencies);
         return true;
     }
 }
@@ -120,16 +99,18 @@ bool compile(path src, path out, path dependencies) {
         should_compile(src, out, dependencies)) {
         create_directory(out.parent_path());
 
-        std::string combined = CXX + " -o " + out.string() + " -c " +
-                               src.string() + ' ' + CXXFLAGS + ' ' +
-                               INCLUDES;
+        std::string combined = CXX + " -MMD -MF " +
+                               dependencies.string() + " -o " +
+                               out.string() + " -c " + src.string() +
+                               ' ' + CXXFLAGS + ' ' + INCLUDES;
 
         if ((!HAS_ERROR || IS_KEEP_GOING)) {
             if (IS_VERBOSE) {
                 std::lock_guard<std::mutex> lock(print_mutex);
                 std::puts(combined.c_str());
             } else {
-                std::string message = CXX + " for " + src.string();
+                std::string message =
+                    "{" + CXX + ",Dependencies} for " + src.string();
                 std::lock_guard<std::mutex> lock(print_mutex);
                 std::puts(message.c_str());
             }
