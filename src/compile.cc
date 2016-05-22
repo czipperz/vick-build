@@ -94,7 +94,7 @@ static bool should_compile(const path& src, const path& out,
     }
 }
 
-bool compile(path src, path out, path dependencies) {
+void compile(path src, path out, path dependencies) {
     if ((!HAS_ERROR || IS_KEEP_GOING) &&
         should_compile(src, out, dependencies)) {
         create_directory(out.parent_path());
@@ -119,5 +119,4 @@ bool compile(path src, path out, path dependencies) {
             }
         }
     }
-    return force_finish;
 }

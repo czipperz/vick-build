@@ -72,11 +72,9 @@ void PerformCompile::thread_compile() {
             jobs.pop_front();
         }
 
-        if (compile(std::move(thread_job.src),
-                    std::move(thread_job.obj),
-                    std::move(thread_job.dep))) {
-            // return;
-        }
+        compile(std::move(thread_job.src),
+                std::move(thread_job.obj),
+                std::move(thread_job.dep));
     }
 }
 
