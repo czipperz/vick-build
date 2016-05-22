@@ -4,6 +4,8 @@
 #include <thread>
 #include <forward_list>
 #include <algorithm>
+#include <cstdio>
+#include <cstdlib>
 
 #include "compile.hh"
 #include "conversion.hh"
@@ -17,9 +19,9 @@ void PerformCompile::perform_compile(path p,
     const directory_iterator end;
 
     if (!is_directory(p)) {
-        fprintf(stderr, "ERROR: Directory `%s` doesn't exist.",
-                p.c_str());
-        exit(1);
+        std::fprintf(stderr, "ERROR: Directory `%s` doesn't exist.\n",
+                     p.c_str());
+        std::exit(1);
     }
     this->consume_directory(p, to_out);
 
@@ -45,7 +47,7 @@ PerformCompile::~PerformCompile() {
         t.join();
     }
     if (!jobs.empty()) {
-        exit(EXIT_FAILURE);
+        std::exit(EXIT_FAILURE);
     }
 }
 
