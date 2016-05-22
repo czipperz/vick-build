@@ -93,22 +93,16 @@ void PerformCompile::consume(path src_file,
     path object_file = to_out(src_file);
     path dependencies_file = to_dependencies(object_file);
 
-    if (NUM_THREADS == 0) {
-        if (compile(std::move(src_file), std::move(object_file),
-                    std::move(dependencies_file))) {
-        }
-    } else {
-        file_group group = {std::move(src_file),
-                            std::move(object_file),
-                            std::move(dependencies_file)};
+    file_group group = {std::move(src_file),
+                        std::move(object_file),
+                        std::move(dependencies_file)};
 
-        {
-            std::lock_guard<std::mutex> lock(mutex);
-            jobs.emplace_front(std::move(group));
-        }
-
-        consumer_cond.notify_one();
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        jobs.emplace_front(std::move(group));
     }
+
+    consumer_cond.notify_one();
 }
 
 void PerformCompile::consume_directory(path dir,
