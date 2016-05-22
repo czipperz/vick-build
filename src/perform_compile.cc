@@ -32,14 +32,14 @@ void PerformCompile::perform_compile(path p,
         this->consume_directory(dir / p, to_out);
     }
 
-    {
-        std::lock_guard<std::mutex> _(this->mutex);
-        this->done = true;
-    }
     this->consumer_cond.notify_all();
 }
 
 PerformCompile::~PerformCompile() {
+    {
+        std::lock_guard<std::mutex> _(this->mutex);
+        this->done = true;
+    }
     this->thread_compile();
     for (auto& t : threads) {
         t.join();
