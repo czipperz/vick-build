@@ -1,7 +1,3 @@
-#include <string.h>
-#include <stdlib.h>
-#include <pthread.h>
-
 #include "globals.hh"
 
 /* these three are initialized in parse_args */
