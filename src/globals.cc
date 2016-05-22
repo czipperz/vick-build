@@ -1,6 +1,6 @@
 #include "globals.hh"
 
-/* these three are initialized in parse_args */
+/* these are initialized in parse_args */
 bool IS_ALL;
 bool IS_TEST;
 bool IS_CLEAN;
