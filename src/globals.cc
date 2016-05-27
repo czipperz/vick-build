@@ -12,9 +12,10 @@ std::atomic<bool> HAS_ERROR;
 
 std::string CXX = "clang++";
 std::string CXXFLAGS =
-    "-std=c++11 -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor "
-    "-Wnarrowing -Wdelete-non-virtual-dtor -Wctor-dtor-privacy "
-    "-Woverloaded-virtual -Wsign-promo";
+    "-std=c++11 -Weverything -Wno-c++98-compat "
+    "-Wno-exit-time-destructors "
+    "-Wno-global-constructors -Wno-documentation-unknown-command "
+    "-Wno-shadow -Wno-padded";
 std::string LDFLAGS = "-lboost_regex -lncurses -lpthread";
 const std::string INCLUDES = "-Iplugins -Isrc -Icatch-raw";
 
