@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parse_args.hh"
 #include "globals.hh"
+#include "parse_args.hh"
 #include "usage.hh"
 
 static int myatoi(const char* str, const char* s) {
     int val = 0;
     if (!*s) {
-        fprintf(stderr,
-                "Error: Must specify number of threads.  "
-                "Context:\n%s\n", str);
+        fprintf(stderr, "Error: Must specify number of threads.  "
+                        "Context:\n%s\n",
+                str);
         exit(EXIT_FAILURE);
     }
     /* can skip first check since done in if statement above */
@@ -19,10 +19,9 @@ static int myatoi(const char* str, const char* s) {
         if (*s >= '0' && *s <= '9') {
             val = val * 10 + (*s++ - '0');
         } else {
-            fprintf(stderr,
-                    "Non number character (%c) found "
-                    "where expected number.  Context:\n%s\n"
-                    , *s, str);
+            fprintf(stderr, "Non number character (%c) found "
+                            "where expected number.  Context:\n%s\n",
+                    *s, str);
             exit(EXIT_FAILURE);
         }
     } while (*s);
@@ -31,7 +30,7 @@ static int myatoi(const char* str, const char* s) {
 
 void parse_args(int argc, char** argv) {
     bool all = false, test = false, clean = false, verbose = false,
-        num_threads = false, keep_going = false, explain = false;
+         num_threads = false, keep_going = false, explain = false;
     bool implicit_all = true;
     bool exit_at_fin = false;
 
@@ -57,7 +56,8 @@ void parse_args(int argc, char** argv) {
             if (clean) {
                 fputs("Warning: Giving NUM_THREADS to `clean` is "
                       "currently useless.  This may change in future "
-                      "versions.\n", stderr);
+                      "versions.\n",
+                      stderr);
             }
             num_threads = true;
             NUM_THREADS = val;
@@ -72,7 +72,8 @@ void parse_args(int argc, char** argv) {
         } else if (strncmp(str, "CXXFLAGS+=", 10) == 0) {
             /* CXXFLAGS+=<extra CXXFLAGS> */
             if (str[10] == 0) {
-                fputs("Error: cannot append empty string to CXX\n", stderr);
+                fputs("Error: cannot append empty string to CXX\n",
+                      stderr);
                 exit(EXIT_FAILURE);
             }
             CXXFLAGS += str + 10;
@@ -107,12 +108,14 @@ void parse_args(int argc, char** argv) {
         } else if (strcmp(str, "test") == 0) {
             if (clean) {
                 fputs("ERROR: Cannot run `test` whilst running "
-                      "`clean`.\n", stderr);
+                      "`clean`.\n",
+                      stderr);
                 exit(EXIT_FAILURE);
             }
             if (all) {
                 fputs("Warning: `test` implies `all`, specifying "
-                      "`all` and `test` is redundant.\n", stderr);
+                      "`all` and `test` is redundant.\n",
+                      stderr);
             }
             all = true;
             test = true;
@@ -121,12 +124,14 @@ void parse_args(int argc, char** argv) {
         } else if (strcmp(str, "all") == 0) {
             if (clean) {
                 fputs("ERROR: Cannot run `test` whilst running "
-                      "`clean`.\n", stderr);
+                      "`clean`.\n",
+                      stderr);
                 exit(EXIT_FAILURE);
             }
             if (test) {
                 fputs("Warning: `test` implies `all`, specifying "
-                      "`all` and `test` is redundant.\n", stderr);
+                      "`all` and `test` is redundant.\n",
+                      stderr);
             }
             all = true;
 
@@ -135,13 +140,15 @@ void parse_args(int argc, char** argv) {
             implicit_all = false;
             if (all || test) {
                 fputs("ERROR: Cannot run `clean` whilst running "
-                      "`all` and/or `test`.\n", stderr);
+                      "`all` and/or `test`.\n",
+                      stderr);
                 exit(EXIT_FAILURE);
             }
             if (num_threads && NUM_THREADS != 0) {
                 fputs("Warning: Giving NUM_THREADS to `clean` is "
                       "currently useless.  This may change in future "
-                      "versions.\n", stderr);
+                      "versions.\n",
+                      stderr);
             }
             clean = true;
 

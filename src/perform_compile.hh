@@ -1,13 +1,14 @@
 #ifndef HEADER_GUARD_PERFORM_TESTS_H
 #define HEADER_GUARD_PERFORM_TESTS_H
 
+#include <boost/filesystem.hpp>
+#include <condition_variable>
 #include <forward_list>
 #include <mutex>
-#include <condition_variable>
 #include <thread>
-#include <boost/filesystem.hpp>
 
-/// Unfortunately we have to export this because `PerformCompile` uses it.
+/// Unfortunately we have to export this because `PerformCompile` uses
+/// it.
 class file_group {
 public:
     file_group() = default;

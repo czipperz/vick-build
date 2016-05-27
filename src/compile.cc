@@ -1,12 +1,12 @@
-#include <atomic>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <atomic>
 #include <fstream>
 
-#include "print_mut.hh"
 #include "compile.hh"
 #include "globals.hh"
+#include "print_mut.hh"
 
 using namespace boost::filesystem;
 
@@ -14,12 +14,11 @@ static bool
 consume_file(const path& src, const path& out, const path& dep,
              std::vector<std::string> lines) {
     if (lines.empty()) {
-    invalid:
-        {
-            std::lock_guard<std::mutex> lock(print_mutex);
-            fprintf(stderr, "Dependencies file `%s` is invalid.\n",
-                    dep.c_str());
-        }
+    invalid : {
+        std::lock_guard<std::mutex> lock(print_mutex);
+        fprintf(stderr, "Dependencies file `%s` is invalid.\n",
+                dep.c_str());
+    }
         return true;
     }
 

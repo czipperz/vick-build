@@ -1,11 +1,11 @@
-#include <boost/filesystem.hpp>
-#include <mutex>
-#include <condition_variable>
-#include <thread>
-#include <forward_list>
 #include <algorithm>
+#include <boost/filesystem.hpp>
+#include <condition_variable>
 #include <cstdio>
 #include <cstdlib>
+#include <forward_list>
+#include <mutex>
+#include <thread>
 
 #include "compile.hh"
 #include "conversion.hh"
@@ -72,8 +72,7 @@ void PerformCompile::thread_compile() {
             jobs.pop_front();
         }
 
-        compile(std::move(thread_job.src),
-                std::move(thread_job.obj),
+        compile(std::move(thread_job.src), std::move(thread_job.obj),
                 std::move(thread_job.dep));
     }
 }
@@ -93,8 +92,7 @@ void PerformCompile::consume(path src_file,
     path object_file = to_out(src_file);
     path dependencies_file = to_dependencies(object_file);
 
-    file_group group = {std::move(src_file),
-                        std::move(object_file),
+    file_group group = {std::move(src_file), std::move(object_file),
                         std::move(dependencies_file)};
 
     {

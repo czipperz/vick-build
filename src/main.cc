@@ -1,10 +1,10 @@
 #include <cstdio>
 
 #include "conversion.hh"
-#include "parse_args.hh"
 #include "globals.hh"
-#include "perform_compile.hh"
+#include "parse_args.hh"
 #include "perform_clean.hh"
+#include "perform_compile.hh"
 
 using namespace boost::filesystem;
 int main(int argc, char** argv) {
@@ -30,9 +30,7 @@ int main(int argc, char** argv) {
         auto o_files = get_files(SRCOUT_DIR, ".o");
         auto command = CXX + " -o vick " + LDFLAGS;
         for (const auto& f : o_files) {
-            if (f !=
-                path(SRCOUT_DIR) /
-                    "configuration_testing.o") {
+            if (f != path(SRCOUT_DIR) / "configuration_testing.o") {
                 command += ' ';
                 command += f.string();
             }

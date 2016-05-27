@@ -17,6 +17,6 @@ void perform_clean() {
             total += remove_all(*plug / TESTOUT_DIR, ec);
         }
     }
-    puts((std::string("Deleted ") +
-          std::to_string(total) + " files").c_str());
+    puts((std::string("Deleted ") + std::to_string(total) + " files")
+             .c_str());
 }

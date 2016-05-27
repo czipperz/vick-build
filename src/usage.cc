@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "usage.hh"
 #include "globals.hh"
+#include "usage.hh"
 
 void usage(const char* progname) {
     fprintf(stderr,
@@ -21,8 +21,8 @@ void usage(const char* progname) {
             "                 `*.cc` files.\n"
             "    LDFLAGS      The flags that will be given to CXX when linking\n"
             "                 the program.\n"
-            "\n"
-            , progname);
+            "\n",
+            progname);
     fprintf(stderr,
             "Targets:\n"
             "    clean        Remove the `%s` and `%s` directories.\n"
