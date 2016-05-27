@@ -25,6 +25,10 @@ int main(int argc, char** argv) {
         // compile added files (destructor)
     }
 
+    if (HAS_ERROR) {
+        exit(EXIT_FAILURE);
+    }
+
     if (IS_ALL) {
         // link executable
         auto o_files = get_files(SRCOUT_DIR, ".o");
