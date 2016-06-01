@@ -59,8 +59,12 @@ void PerformCompile::thread_compile() {
             std::unique_lock<std::mutex> lock(mutex);
             // wait until `done || have_job`.
             consumer_cond.wait(lock, [this] {
-                return done || !jobs.empty();
+                return done || !jobs.empty() ||
+                       (!IS_KEEP_GOING && HAS_ERROR);
             });
+            if (!IS_KEEP_GOING && HAS_ERROR) {
+                return;
+            }
             if (jobs.empty()) {
                 if (done) {
                     return;
