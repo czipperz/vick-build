@@ -44,7 +44,9 @@ int main(int argc, char** argv) {
         } else {
             std::puts("Linking binary");
         }
-        system(command.c_str());
+        if (system(command.c_str())) {
+            exit(EXIT_FAILURE);
+        }
     }
     if (IS_TEST) {
         // link tests
@@ -64,13 +66,17 @@ int main(int argc, char** argv) {
         } else {
             std::puts("Linking tests");
         }
-        system(command.c_str());
+        if (system(command.c_str())) {
+            exit(EXIT_FAILURE);
+        }
         std::puts("Running tests");
         auto run = path(".") / TESTOUT_DIR / "out";
         if (IS_VERBOSE) {
             std::puts(run.c_str());
         }
-        system(run.c_str());
+        if (system(run.c_str())) {
+            exit(EXIT_FAILURE);
+        }
     }
     if (IS_CLEAN) {
         /* cleanup */
