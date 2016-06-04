@@ -13,7 +13,7 @@ std::atomic<bool> HAS_ERROR;
 std::string CXX = "clang++";
 std::string CXXFLAGS =
     "-std=c++11 -Weverything -Wno-c++98-compat "
-    "-Wno-exit-time-destructors "
+    "-Wno-c++98-compat-pedantic -Wno-exit-time-destructors "
     "-Wno-global-constructors -Wno-documentation-unknown-command "
     "-Wno-shadow -Wno-padded -Wno-weak-vtables";
 std::string LDFLAGS = "-lboost_regex -lncurses -lpthread";
