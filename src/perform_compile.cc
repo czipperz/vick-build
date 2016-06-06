@@ -42,6 +42,7 @@ PerformCompile::~PerformCompile() {
         std::lock_guard<std::mutex> _(this->mutex);
         this->done = true;
     }
+    consumer_cond.notify_all();
     this->thread_compile();
     for (auto& t : threads) {
         t.join();
