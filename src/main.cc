@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
         } else {
             std::puts("Linking binary");
         }
+        std::fflush(stdout);
         if (system(command.c_str())) {
             exit(EXIT_FAILURE);
         }
@@ -66,6 +67,7 @@ int main(int argc, char** argv) {
         } else {
             std::puts("Linking tests");
         }
+        std::fflush(stdout);
         if (system(command.c_str())) {
             exit(EXIT_FAILURE);
         }
@@ -74,6 +76,7 @@ int main(int argc, char** argv) {
         if (IS_VERBOSE) {
             std::puts(run.c_str());
         }
+        std::fflush(stdout);
         if (system(run.c_str())) {
             exit(EXIT_FAILURE);
         }
